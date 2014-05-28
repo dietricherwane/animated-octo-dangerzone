@@ -20,8 +20,8 @@ PaymoneyAdministration::Application.routes.draw do
   get 'user/enable_profile/:id' => 'users#enable_profile', :as => :enable_user_profile
   get 'user/disable_profile/:id' => 'users#disable_profile', :as => :disable_user_profile 
   
-  get "liste-des-comptes-activés" => "accounts#index", as: :enabled_accounts_list
-  get "liste-des-comptes-désactivés" => "accounts#disabled_accounts", as: :disabled_accounts_list
+  get "liste-des-comptes-actives" => "accounts#index", as: :enabled_accounts_list
+  get "liste-des-comptes-desactives" => "accounts#disabled_accounts", as: :disabled_accounts_list
   get "liste-des-depots/:account_id" => "accounts#credits", as: :list_credits
   get "liste-des-retraits/:account_id" => "accounts#debits", as: :list_debits
   get "activer-un-compte/:account_id" => "accounts#enable_account", as: :enable_account
