@@ -1,0 +1,45 @@
+<div class="page-header">
+    <div class="icon">
+        <span class="ico-arrow-right"></span>
+    </div>
+    <h1>Liste des retraits de <%= "#{@account['comptePrenom']} #{@account['compteNom']}" %> <small>Affichage de la liste des transactions de retrait ayant eu lieu sur le compte</small></h1>
+</div>
+
+<div class = "row-fluid">
+  <div class = "span12">
+    <%= render 'layouts/flash_messages' %>
+    <% if !@error_messages.blank? %>  
+      <div class = "alert alert-error">         
+        <ul>
+        <% @error_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <% if !@alert_messages.blank? %>  
+      <div class = "alert alert-info">         
+        <% @alert_messages.each do |msg| %>
+          <%= msg %>
+        <% end %>
+      </div>
+    <% end %>
+    <% if !@success_messages.blank? %> 
+      <div class = "alert alert-success">         
+        <% @success_messages.each do |msg| %>
+          <%= msg %>
+        <% end %>
+      </div>
+    <% end %>
+        
+  <div class="block">  
+
+          <%
+          @head_color = "purple"
+          @label = "label"
+          @action = "debits"
+        %>
+          <%= render partial: "transactions", :locals => {:head_color => @head_color, :accounts => @accounts, :label => @label, :action => @action} %> 
+
+  </div>
+</div>

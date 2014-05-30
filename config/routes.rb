@@ -22,8 +22,8 @@ PaymoneyAdministration::Application.routes.draw do
   
   get "liste-des-comptes-actives" => "accounts#index", as: :enabled_accounts_list
   get "liste-des-comptes-desactives" => "accounts#disabled_accounts", as: :disabled_accounts_list
-  get "liste-des-depots/:account_id" => "accounts#credits", as: :list_credits
-  get "liste-des-retraits/:account_id" => "accounts#debits", as: :list_debits
+  get "liste-des-depots" => "accounts#credits", as: :list_credits
+  get "liste-des-retraits" => "accounts#debits", as: :list_debits
   get "activer-un-compte/:account_id" => "accounts#enable_account", as: :enable_account
   get "desactiver-un-compte/:account_id" => "accounts#disable_account", as: :disable_account
   post "rechercher-un-compte" => "accounts#search"

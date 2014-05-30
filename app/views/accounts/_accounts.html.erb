@@ -47,12 +47,12 @@
                 <b>Contact: </b><%= account["comptePhone"] %>
               </td> 
               <td width="15%">
-                <a title= "Liste des dépôts" href = "<%= list_credits_path(account['idCompte']) %>" class = "button green">
+                <a title= "Liste des dépôts" href = "/liste-des-depots?account_id=<%= account['idCompte'] %>&email=<%= account['compteEmail'] %>" class = "button green">
 					        <div class = "icon">			
 					          <span class = "ico-money-bag"></span>		    
 					        </div>
 					      </a>
-					      <a title= "Liste des retraits" href = "<%= list_debits_path(account['idCompte']) %>" class = "button purple">
+					      <a title= "Liste des retraits" href = "/liste-des-retraits?account_id=<%= account['idCompte'] %>&email=<%= account['compteEmail'] %>" class = "button purple">
 					        <div class = "icon">			
 					          <span class = "ico-money"></span>		    
 					        </div>

@@ -39,11 +39,40 @@ class AccountsController < ApplicationController
   end
   
   def credits
-    
+    # status = 1
+    @account = search_account(params[:email])
+    @operations = get_credit_or_debit_operations(@account["idCompte"], 1)
   end
   
   def debits
+    # status = 2
+    @account = search_account(params[:email])
+    @operations = get_credit_or_debit_operations(@account["idCompte"], 2)
+  end
   
+  def get_credit_or_debit_operations(account_id, status)
+    @connexion = ActiveRecord::Base.establish_connection(
+      :adapter  => "mysql",
+      :host     => "localhost",
+      :port     => 3306,
+      :encoding => "utf8",
+      :username => "root",
+      :password => "jason",
+      :database => "PayMoneyDB"
+    )    
+    @results = @connexion.connection.execute("SELECT * FROM operation WHERE type_oper_idtype_oper = #{status} AND Compte_idCompte = #{account_id}")
+    
+    @connexion = ActiveRecord::Base.establish_connection(
+      :adapter  => "postgresql",
+      :host     => "localhost",
+      :port     => 5432,
+      :encoding => "utf8",
+      :username => "o1",
+      :password => "com99123",
+      :database => "PaymoneyAdministration_development"
+    )
+    @results = Kaminari.paginate_array(@results.to_a).page(params[:page]).per(10)
+    @results
   end
   
   def enable_account
@@ -97,6 +126,18 @@ class AccountsController < ApplicationController
         end
       end
     end
+	end
+	
+	def search_account(terms)
+	  @error_messages = []
+	  @account = nil
+	  @request = Typhoeus::Request.new(URI.escape("#{@@parameters.back_office_url}/PAYMONEY-NGSER/rest/BACKOFFICECompteList/GetAllCompte_All_MUTI_CRITERE/#{terms}"), followlocation: true)        
+    @internal_com_request = "@response = request.response.body"        
+    run_typhoeus_request(@request, @internal_com_request)
+    if !@response.blank?
+      @accounts = JSON.parse(@response.sub(/\:/, ":[").sub(/\}\}$/, "}]}")).first[1].first
+    end
+    @accounts
 	end
   
 end
