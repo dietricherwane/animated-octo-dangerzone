@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
 			      administrator_dashboard_path	
 			    else
 			      if @short_profile == "AUD"
-			        transactions_path	
+			        enabled_accounts_list_path	
 			      end	
 			    end
 			  end	

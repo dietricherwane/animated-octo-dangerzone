@@ -12,7 +12,7 @@ PaymoneyAdministration::Application.configure do
   config.cache_classes = false
   
   # Mail config
-  config.action_mailer.default_url_options = { :host => '41.189.40.193:3001' }
+  config.action_mailer.default_url_options = { :host => '41.189.40.193:3005' }
   
   ActionMailer::Base.smtp_settings = {
   	:openssl_verify_mode => 'none',
