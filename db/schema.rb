@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140525092109) do
+ActiveRecord::Schema.define(version: 20140610114418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20140525092109) do
     t.boolean  "view_transactions"
     t.boolean  "create_profile"
     t.boolean  "edit_profile"
+    t.boolean  "disable_account"
   end
 
   create_table "sessions", force: true do |t|

@@ -22,12 +22,12 @@
 					</td>
 					<td>
 					  <% if current_user.profile.edit_profile %>
-					    <a href = "<%= edit_profile_path(profile.id) %>" class = "button green">
+					    <a title = "Modifier le profil" href = "<%= edit_profile_path(profile.id) %>" class = "button green">
 					      <div class = "icon">			
 					        <span class = "ico-pencil"></span>		    
 					      </div>
 					    </a>
-					    <a href = "/profiles/edit_rights" class = "button blue">
+					    <a title = "Modifier les droits" href = "/profiles/edit_rights" class = "button blue">
 					      <div class = "icon">			
 					        <span class = "ico-random"></span>		    
 					      </div>

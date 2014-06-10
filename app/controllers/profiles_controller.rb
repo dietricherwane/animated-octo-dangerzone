@@ -11,9 +11,23 @@ class ProfilesController < ApplicationController
   
   end
   
+  def auditor_index
+    @namecss = @shortcutcss = "row-form"
+    @profiles = Profile.where("shortcut NOT IN ('ADMIN-P', 'ADMIN-R', 'ADMIN-A', 'GBUM')").page(params[:page]).per_page(17)
+  end
+  
+  def users_per_profile
+    @profile = Profile.find_by_id(params[:profile_id])
+    if @profile.blank?
+      redirect_to auditor_index_path, :notice => "Ce profil n'existe pas."
+    else
+      @users = User.where("profile_id = #{@profile.id}").page(params[:page]).per_page(17)
+    end
+  end
+  
   def index
     @namecss = @shortcutcss = "row-form"
-    @profiles = Profile.where("name NOT IN ('Administrateur', 'Audit-Contrôle', 'Audit')").page(params[:page]).per_page(17)
+    @profiles = Profile.where("shortcut NOT IN ('ADMIN-P', 'ADMIN-R', 'ADMIN-A', 'GBUM')").page(params[:page]).per_page(17)
   end
   
   def create
@@ -22,7 +36,7 @@ class ProfilesController < ApplicationController
     @namecss = @shortcutcss = "row-form"
     @name = params[:name]
     @shortcut = params[:shortcut]
-    @profiles = Profile.where("name NOT IN ('Administrateur', 'Audit-Contrôle', 'Audit')").page(params[:page]).per_page(17)
+    @profiles = Profile.where("shortcut NOT IN ('ADMIN-P', 'ADMIN-R', 'ADMIN-A', 'GBUM')").page(params[:page]).per_page(17)
 
     if Profile.find(:all, :conditions => ["name ILIKE ? OR shortcut ILIKE ?", @name, @shortcut]).blank?
       @fields = [[@name, "le nom du profil", "@namecss"], [@shortcut, "l'abbréviation du profil", "@shortcutcss"]]
@@ -50,7 +64,7 @@ class ProfilesController < ApplicationController
   
   def edit
     @namecss = @shortcutcss = "row-form"
-     @profiles = Profile.where("name NOT IN ('Administrateur', 'Audit-Contrôle', 'Audit')").page(params[:page]).per_page(17)
+     @profiles = Profile.where("shortcut NOT IN ('ADMIN-P', 'ADMIN-R', 'ADMIN-A', 'GBUM')").page(params[:page]).per_page(17)
     @profile = Profile.find_by_id(params[:id])
   end
   
@@ -61,7 +75,7 @@ class ProfilesController < ApplicationController
     @profile = Profile.find_by_id(params[:id])
     @name = params[:name]
     @shortcut = params[:shortcut]
-    @profiles = Profile.where("name NOT IN ('Administrateur', 'Audit-Contrôle', 'Audit')").page(params[:page]).per_page(17)
+    @profiles = Profile.where("shortcut NOT IN ('ADMIN-P', 'ADMIN-R', 'ADMIN-A', 'GBUM')").page(params[:page]).per_page(17)
 
     if Profile.find(:all, :conditions => ["(name ILIKE ? OR shortcut ILIKE ?) AND id != ?", @name, @shortcut, @profile.id]).blank?
       @fields = [[@name, "le nom du profil", "@namecss"], [@shortcut, "l'abbréviation du profil", "@shortcutcss"]]
@@ -88,7 +102,7 @@ class ProfilesController < ApplicationController
   end
   
   def edit_rights
-    @profiles = Profile.where("name NOT IN ('Administrateur', 'Audit-Contrôle', 'Audit')").page(params[:page]).per_page(17)
+    @profiles = Profile.where("shortcut NOT IN ('ADMIN-P', 'ADMIN-R', 'ADMIN-A', 'GBUM')").order("name ASC").page(params[:page]).per_page(17)
   end
   
   def enable_create_user_right
@@ -100,7 +114,6 @@ class ProfilesController < ApplicationController
   end
   
   def create_user_right(status, id, message)
-    @profiles = Profile.where("name NOT IN ('Administrateur', 'Audit-Contrôle', 'Audit')").page(params[:page]).per_page(17)
     @profile = Profile.find_by_id(id)
     @profile.update_attributes(create_user: status)
     
@@ -116,185 +129,9 @@ class ProfilesController < ApplicationController
   end
   
   def edit_user_data_right(status, id, message)
-    @profiles = Profile.where("name NOT IN ('Administrateur', 'Audit-Contrôle', 'Audit')").page(params[:page]).per_page(17)
+    #@profiles = Profile.where("shortcut NOT IN ('ADMIN-P', 'ADMIN-R', 'ADMIN-A', 'GBUM')").page(params[:page]).per_page(17)
     @profile = Profile.find_by_id(id)
     @profile.update_attributes(edit_user_data: status)
-    
-    redirect_to edit_profiles_rights_path, :notice => "Le profil #{@profile.name} #{message} le droit de modifier les profils utilisateurs."
-  end
-  
-  def enable_create_service_right
-    create_service_right(true, params[:id], "a maintenant")
-  end
-  
-  def disable_create_service_right
-    create_service_right(false, params[:id], "n'a plus")
-  end
-  
-  def create_service_right(status, id, message)
-    @profiles = Profile.where("name NOT IN ('Administrateur', 'Audit-Contrôle', 'Audit')").page(params[:page]).per_page(17)
-    @profile = Profile.find_by_id(id)
-    @profile.update_attributes(create_service: status)
-    
-    redirect_to edit_profiles_rights_path, :notice => "Le profil #{@profile.name} #{message} le droit de modifier les profils utilisateurs."
-  end
-  
-  def enable_edit_service_right
-    edit_service_right(true, params[:id], "a maintenant")
-  end
-  
-  def disable_edit_service_right
-    edit_service_right(false, params[:id], "n'a plus")
-  end
-  
-  def edit_service_right(status, id, message)
-    @profiles = Profile.where("name NOT IN ('Administrateur', 'Audit-Contrôle', 'Audit')").page(params[:page]).per_page(17)
-    @profile = Profile.find_by_id(id)
-    @profile.update_attributes(edit_service: status)
-    
-    redirect_to edit_profiles_rights_path, :notice => "Le profil #{@profile.name} #{message} le droit de modifier les profils utilisateurs."
-  end
-  
-  def enable_create_operation_right
-    create_operation_right(true, params[:id], "a maintenant")
-  end
-  
-  def disable_create_operation_right
-    create_operation_right(false, params[:id], "n'a plus")
-  end
-  
-  def create_operation_right(status, id, message)
-    @profiles = Profile.where("name NOT IN ('Administrateur', 'Audit-Contrôle', 'Audit')").page(params[:page]).per_page(17)
-    @profile = Profile.find_by_id(id)
-    @profile.update_attributes(create_operation: status)
-    
-    redirect_to edit_profiles_rights_path, :notice => "Le profil #{@profile.name} #{message} le droit de modifier les profils utilisateurs."
-  end
-  
-  def enable_edit_operation_right
-    edit_operation_right(true, params[:id], "a maintenant")
-  end
-  
-  def disable_edit_operation_right
-    edit_operation_right(false, params[:id], "n'a plus")
-  end
-  
-  def edit_operation_right(status, id, message)
-    @profiles = Profile.where("name NOT IN ('Administrateur', 'Audit-Contrôle', 'Audit')").page(params[:page]).per_page(17)
-    @profile = Profile.find_by_id(id)
-    @profile.update_attributes(edit_operation: status)
-    
-    redirect_to edit_profiles_rights_path, :notice => "Le profil #{@profile.name} #{message} le droit de modifier les profils utilisateurs."
-  end
-  
-  def enable_create_inheritor_right
-    create_inheritor_right(true, params[:id], "a maintenant")
-  end
-  
-  def disable_create_inheritor_right
-    create_inheritor_right(false, params[:id], "n'a plus")
-  end
-  
-  def create_inheritor_right(status, id, message)
-    @profiles = Profile.where("name NOT IN ('Administrateur', 'Audit-Contrôle', 'Audit')").page(params[:page]).per_page(17)
-    @profile = Profile.find_by_id(id)
-    @profile.update_attributes(create_inheritor: status)
-    
-    redirect_to edit_profiles_rights_path, :notice => "Le profil #{@profile.name} #{message} le droit de modifier les profils utilisateurs."
-  end
-  
-  def enable_edit_inheritor_right
-    edit_inheritor_right(true, params[:id], "a maintenant")
-  end
-  
-  def disable_edit_inheritor_right
-    edit_inheritor_right(false, params[:id], "n'a plus")
-  end
-  
-  def edit_inheritor_right(status, id, message)
-    @profiles = Profile.where("name NOT IN ('Administrateur', 'Audit-Contrôle', 'Audit')").page(params[:page]).per_page(17)
-    @profile = Profile.find_by_id(id)
-    @profile.update_attributes(edit_inheritor: status)
-    
-    redirect_to edit_profiles_rights_path, :notice => "Le profil #{@profile.name} #{message} le droit de modifier les profils utilisateurs."
-  end
-  
-  def enable_create_bank_right
-    create_bank_right(true, params[:id], "a maintenant")
-  end
-  
-  def disable_create_bank_right
-    create_bank_right(false, params[:id], "n'a plus")
-  end
-  
-  def create_bank_right(status, id, message)
-    @profiles = Profile.where("name NOT IN ('Administrateur', 'Audit-Contrôle', 'Audit')").page(params[:page]).per_page(17)
-    @profile = Profile.find_by_id(id)
-    @profile.update_attributes(create_bank: status)
-    
-    redirect_to edit_profiles_rights_path, :notice => "Le profil #{@profile.name} #{message} le droit de modifier les profils utilisateurs."
-  end
-  
-  def enable_edit_bank_right
-    edit_bank_right(true, params[:id], "a maintenant")
-  end
-  
-  def disable_edit_bank_right
-    edit_bank_right(false, params[:id], "n'a plus")
-  end
-  
-  def edit_bank_right(status, id, message)
-    @profiles = Profile.where("name NOT IN ('Administrateur', 'Audit-Contrôle', 'Audit')").page(params[:page]).per_page(17)
-    @profile = Profile.find_by_id(id)
-    @profile.update_attributes(edit_bank: status)
-    
-    redirect_to edit_profiles_rights_path, :notice => "Le profil #{@profile.name} #{message} le droit de modifier les profils utilisateurs."
-  end
-  
-  def enable_create_wallet_right
-    create_wallet_right(true, params[:id], "a maintenant")
-  end
-  
-  def disable_create_wallet_right
-    create_wallet_right(false, params[:id], "n'a plus")
-  end
-  
-  def create_wallet_right(status, id, message)
-    @profiles = Profile.where("name NOT IN ('Administrateur', 'Audit-Contrôle', 'Audit')").page(params[:page]).per_page(17)
-    @profile = Profile.find_by_id(id)
-    @profile.update_attributes(create_wallet: status)
-    
-    redirect_to edit_profiles_rights_path, :notice => "Le profil #{@profile.name} #{message} le droit de modifier les profils utilisateurs."
-  end
-  
-  def enable_edit_wallet_right
-    edit_wallet_right(true, params[:id], "a maintenant")
-  end
-  
-  def disable_edit_wallet_right
-    edit_wallet_right(false, params[:id], "n'a plus")
-  end
-  
-  def edit_wallet_right(status, id, message)
-    @profiles = Profile.where("name NOT IN ('Administrateur', 'Audit-Contrôle', 'Audit')").page(params[:page]).per_page(17)
-    @profile = Profile.find_by_id(id)
-    @profile.update_attributes(edit_wallet: status)
-    
-    redirect_to edit_profiles_rights_path, :notice => "Le profil #{@profile.name} #{message} le droit de modifier les profils utilisateurs."
-  end
-  
-  def enable_view_transactions_right
-    view_transactions_right(true, params[:id], "a maintenant")
-  end
-  
-  def disable_view_transactions_right
-    view_transactions_right(false, params[:id], "n'a plus")
-  end
-  
-  def view_transactions_right(status, id, message)
-    @profiles = Profile.where("name NOT IN ('Administrateur', 'Audit-Contrôle', 'Audit')").page(params[:page]).per_page(17)
-    @profile = Profile.find_by_id(id)
-    @profile.update_attributes(view_transactions: status)
     
     redirect_to edit_profiles_rights_path, :notice => "Le profil #{@profile.name} #{message} le droit de modifier les profils utilisateurs."
   end
@@ -308,7 +145,6 @@ class ProfilesController < ApplicationController
   end
   
   def create_profile_right(status, id, message)
-    @profiles = Profile.where("name NOT IN ('Administrateur', 'Audit-Contrôle', 'Audit')").page(params[:page]).per_page(17)
     @profile = Profile.find_by_id(id)
     @profile.update_attributes(create_profile: status)
     
@@ -324,11 +160,40 @@ class ProfilesController < ApplicationController
   end
   
   def edit_profile_right(status, id, message)
-    @profiles = Profile.where("name NOT IN ('Administrateur', 'Audit-Contrôle', 'Audit')").page(params[:page]).per_page(17)
     @profile = Profile.find_by_id(id)
     @profile.update_attributes(edit_profile: status)
     
     redirect_to edit_profiles_rights_path, :notice => "Le profil #{@profile.name} #{message} le droit de modifier les profils utilisateurs."
+  end
+  
+  def enable_view_transactions_right
+    view_transactions_right(true, params[:id], "a maintenant")
+  end
+  
+  def disable_view_transactions_right
+    view_transactions_right(false, params[:id], "n'a plus")
+  end
+  
+  def view_transactions_right(status, id, message)
+    @profile = Profile.find_by_id(id)
+    @profile.update_attributes(view_transactions: status)
+    
+    redirect_to edit_profiles_rights_path, :notice => "Le profil #{@profile.name} #{message} le droit de visualiser les transactions."
+  end
+  
+  def enable_disable_account_right
+    disable_account_right(true, params[:id], "a maintenant")
+  end
+  
+  def disable_disable_account_right
+    disable_account_right(false, params[:id], "n'a plus")
+  end
+  
+  def disable_account_right(status, id, message)
+    @profile = Profile.find_by_id(id)
+    @profile.update_attributes(disable_account: status)
+    
+    redirect_to edit_profiles_rights_path, :notice => "Le profil #{@profile.name} #{message} le droit d'ctiver/désactiver des comptes Paymoney."
   end
   
 end

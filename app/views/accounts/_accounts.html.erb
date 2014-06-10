@@ -47,21 +47,25 @@
                 <b>Contact: </b><%= account["comptePhone"] %>
               </td> 
               <td width="15%">
-                <a title= "Liste des dépôts" href = "/liste-des-depots?account_id=<%= account['idCompte'] %>&email=<%= account['compteEmail'] %>" class = "button green">
-					        <div class = "icon">			
-					          <span class = "ico-money-bag"></span>		    
-					        </div>
-					      </a>
-					      <a title= "Liste des retraits" href = "/liste-des-retraits?account_id=<%= account['idCompte'] %>&email=<%= account['compteEmail'] %>" class = "button purple">
-					        <div class = "icon">			
-					          <span class = "ico-money"></span>		    
-					        </div>
-					      </a>
-					      <% if @head_status == "désactivés" %>
-				          <%= link_to "<div class = 'icon'><span class = 'ico-checkmark'></span></div>".html_safe, enable_account_path(account["compteNumero"]), :class => "button green", :confirm => "Êtes vous sûr de vouloir activer ce compte?", :title => "Activer le compte" %>				        
-				        <% else %>
-				          <%= link_to "<div class = 'icon'><span class = 'ico-remove'></span></div>".html_safe, disable_account_path(account["compteNumero"]), :class => "button red", :confirm => "Êtes vous sûr de vouloir désactiver ce compte?", :title => "Désactiver le compte" %>
-				        <% end %>
+                <% if current_user.profile.view_transactions == true %>
+                  <a title= "Liste des dépôts" href = "/liste-des-depots?account_id=<%= account['idCompte'] %>&email=<%= account['compteEmail'] %>" class = "button green">
+					          <div class = "icon">			
+					            <span class = "ico-money-bag"></span>		    
+					          </div>
+					        </a>
+					        <a title= "Liste des retraits" href = "/liste-des-retraits?account_id=<%= account['idCompte'] %>&email=<%= account['compteEmail'] %>" class = "button purple">
+					          <div class = "icon">			
+					            <span class = "ico-money"></span>		    
+					          </div>
+					        </a>
+					      <% end %>
+					      <% if current_user.profile.disable_account == true %>
+				          <% if @head_status == "désactivés" %>
+			              <%= link_to "<div class = 'icon'><span class = 'ico-checkmark'></span></div>".html_safe, enable_account_path(account["compteNumero"]), :class => "button green", :confirm => "Êtes vous sûr de vouloir activer ce compte?", :title => "Activer le compte" %>				        
+			            <% else %>
+			              <%= link_to "<div class = 'icon'><span class = 'ico-remove'></span></div>".html_safe, disable_account_path(account["compteNumero"]), :class => "button red", :confirm => "Êtes vous sûr de vouloir désactiver ce compte?", :title => "Désactiver le compte" %>
+			            <% end %>
+			          <% end %>
               </td>                                   
             </tr> 
           <% end %>

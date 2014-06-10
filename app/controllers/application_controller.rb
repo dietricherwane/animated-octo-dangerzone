@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
-  protect_from_forgery with: :exception
+  #protect_from_forgery with: :exception
+  protect_from_forgery with: :null_session
   
   #helper_method :dummy
   #prepend_before_filter :authenticate_user!, :cache_buster
@@ -31,21 +32,21 @@ class ApplicationController < ActionController::Base
 		
 		def after_sign_in_path_for(resource_or_scope)
 			@short_profile = current_user.short_profile
-			if @short_profile == "ADMIN" or @short_profile == "AUD-C" or @short_profile == "AUD"
-			  if @short_profile == "ADMIN"
+			if @short_profile == "ADMIN-P" or @short_profile == "ADMIN-R" or @short_profile == "ADMIN-A" or @short_profile == "GBUM"
+			  if @short_profile == "ADMIN-P"
 			    profiles_path	
 			  else
-			    if @short_profile == "AUD-C"
+			    if @short_profile == "ADMIN-R"
 			      administrator_dashboard_path	
-			    else
-			      if @short_profile == "AUD"
-			        enabled_accounts_list_path	
-			      end	
+			    else  
+		        if @short_profile == "ADMIN-A" or @short_profile == "GBUM"
+		          enabled_accounts_list_path	
+		        end	
 			    end
 			  end	
 			    
 			else
-			  if @short_profile != "ADMIN" and @short_profile != "AUD-C" and @short_profile != "AUD" and !@short_profile.blank?
+			  if @short_profile != "ADMIN-P" and @short_profile != "ADMIN-R" and @short_profile != "ADMIN-A" and @short_profile != "GBUM" and !@short_profile.blank?
 			    custom_profiles_dashboard_path
 			  else
 			    new_user_session_path
@@ -87,17 +88,19 @@ class ApplicationController < ActionController::Base
     	else
 			  @short_profile = current_user.short_profile
 			  case @short_profile
-		      when "ADMIN"
+		      when "ADMIN-P"
 			      @layout = "administrator"
-		      when "AUD-C"
-			      @layout = "auditor_controller"
-		      when "AUD"
-			      @layout = "auditor"			    
+		      when "ADMIN-R"
+			      @layout = "administrator_rights"
+		      when "ADMIN-A"
+			      @layout = "administrator_auditor"		
+			    when "GBUM"
+			      @layout = "bu_manager"	    
 			    else
 			      @layout = "sessions"
 		      end		    
 		  end
-		  if @short_profile != "ADMIN" and @short_profile != "AUD-C" and @short_profile != "AUD" and !@short_profile.blank? 
+		  if @short_profile != "ADMIN-P" and @short_profile != "ADMIN-R" and @short_profile != "ADMIN-A" and @short_profile != "GBUM" and !@short_profile.blank? 
 		    @layout = "custom_profiles"
 		  end
 		  @layout			

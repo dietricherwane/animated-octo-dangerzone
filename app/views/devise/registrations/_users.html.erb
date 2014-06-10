@@ -46,16 +46,16 @@
 					</td>
 					<td>
 					  <% if current_user.profile.edit_user_data %>
-					    <a href = "/user/edit_profile/<%= user.id %>" class = "button green">
+					    <a title = "Modifier le profil" href = "/user/edit_profile/<%= user.id %>" class = "button green">
 					      <div class = "icon">			
 					        <span class = "ico-pencil"></span>		    
 					      </div>
 					    </a>
 					    <% if !user.id.eql?(current_user.id) %>
 					      <% if user.enabled? %>
-					        <%= link_to "<div class = 'icon'><span class = 'ico-remove'></span></div>".html_safe, disable_user_profile_path(user.id), :class => "button red", :confirm => "Êtes vous sûr de vouloir désactiver le profil de cet utilisateur?" %>
+					        <%= link_to "<div class = 'icon'><span class = 'ico-remove'></span></div>".html_safe, disable_user_profile_path(user.id), :class => "button red", :title => "Désactiver le compte", :confirm => "Êtes vous sûr de vouloir désactiver le profil de cet utilisateur?" %>
 					      <% else %>
-					        <%= link_to "<div class = 'icon'><span class = 'ico-checkmark'></span></div>".html_safe, enable_user_profile_path(user.id), :class => "button green", :confirm => "Êtes vous sûr de vouloir activer le profil de cet utilisateur?" %>
+					        <%= link_to "<div class = 'icon'><span class = 'ico-checkmark'></span></div>".html_safe, enable_user_profile_path(user.id), :class => "button green", :title => "Activer le compte", :confirm => "Êtes vous sûr de vouloir activer le profil de cet utilisateur?" %>
 					      <% end %>
 					    <% end %>
 					  <% end %>

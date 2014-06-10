@@ -90,52 +90,41 @@
               <% @profiles.each do |profile| %>                
                 <tr>                 
                   <td>
-                    <script type="text/javascript">	
-		                  $(document).on('ready page:load', function(){    
-			                  options['innerHtml'] = "Activer le droit de création d'utilisateurs.";								
-			                  $("#enable_create_user_<%= profile.id %>").CreateBubblePopup( options );
-			                  options['innerHtml'] = "Désactiver le droit de création d'utilisateurs.";								
-			                  $("#disable_create_user_<%= profile.id %>").CreateBubblePopup( options ); 
-			                  
-			                  options['innerHtml'] = "Activer le droit de modification de profils utilisateurs.";								
-			                  $("#enable_edit_user_data_<%= profile.id %>").CreateBubblePopup( options );
-			                  options['innerHtml'] = "Désactiver le droit de modification de profils utilisateurs.";								
-			                  $("#disable_edit_user_data_<%= profile.id %>").CreateBubblePopup( options ); 
-			                  		                  			                  
-			                  options['innerHtml'] = "Activer le droit de création de profils.";								
-			                  $("#enable_create_profile_<%= profile.id %>").CreateBubblePopup( options );
-			                  options['innerHtml'] = "Désactiver le droit de création de profils.";								
-			                  $("#disable_create_profile_<%= profile.id %>").CreateBubblePopup( options );  
-			                  
-			                  options['innerHtml'] = "Activer le droit de modification de profils.";								
-			                  $("#enable_edit_profile_<%= profile.id %>").CreateBubblePopup( options );
-			                  options['innerHtml'] = "Désactiver le droit de modification de profils.";								
-			                  $("#disable_edit_profile_<%= profile.id %>").CreateBubblePopup( options );                                                                          
-		                  });
-		                </script>
                     <% if profile.create_user == false or profile.create_user.blank? %>                  
-					            <%= link_to "<div class = 'icon'><span class = 'ico-monitor'></span></div>".html_safe, enable_create_user_right_path(profile.id), :class => "button green", :id => "enable_create_user_#{profile.id}", :confirm => "Êtes vous sûr de vouloir activer le droit de création d'utilisateurs?" %>					            
+					            <%= link_to "<div class = 'icon'><span class = 'ico-group'></span></div>".html_safe, enable_create_user_right_path(profile.id), :class => "button green", :id => "enable_create_user_#{profile.id}", :title => "Activer le droit de création d'utilisateurs", :confirm => "Êtes vous sûr de vouloir activer le droit de création d'utilisateurs?" %>					            
 					          <% else %>
-					            <%= link_to "<div class = 'icon'><span class = 'ico-monitor'></span></div>".html_safe, disable_create_user_right_path(profile.id), :class => "button red", :id => "disable_create_user_#{profile.id}", :confirm => "Êtes vous sûr de vouloir désactiver le droit de création d'utilisateurs?" %>
+					            <%= link_to "<div class = 'icon'><span class = 'ico-group'></span></div>".html_safe, disable_create_user_right_path(profile.id), :class => "button red", :id => "disable_create_user_#{profile.id}", :title => "Désactiver le droit de création d'utilisateurs", :confirm => "Êtes vous sûr de vouloir désactiver le droit de création d'utilisateurs?" %>
 					          <% end %>
 					          
 					          <% if profile.edit_user_data == false or profile.edit_user_data.blank? %>                  
-					            <%= link_to "<div class = 'icon'><span class = 'ico-group'></span></div>".html_safe, enable_edit_user_data_right_path(profile.id), :class => "button blue", :id => "enable_edit_user_data_#{profile.id}", :confirm => "Êtes vous sûr de vouloir activer le droit de modification de profils utilisateurs?" %>					            
+					            <%= link_to "<div class = 'icon'><span class = 'ico-group'></span></div>".html_safe, enable_edit_user_data_right_path(profile.id), :class => "button blue", :id => "enable_edit_user_data_#{profile.id}", :title => "Activer le droit de modification de données utilisateur", :confirm => "Êtes vous sûr de vouloir activer le droit de modification de données utilisateurs?" %>					            
 					          <% else %>
-					            <%= link_to "<div class = 'icon'><span class = 'ico-group'></span></div>".html_safe, disable_edit_user_data_right_path(profile.id), :class => "button yellow", :id => "disable_edit_user_data_#{profile.id}", :confirm => "Êtes vous sûr de vouloir désactiver le droit de modification de profils utilisateurs?" %>
+					            <%= link_to "<div class = 'icon'><span class = 'ico-group'></span></div>".html_safe, disable_edit_user_data_right_path(profile.id), :class => "button yellow", :id => "disable_edit_user_data_#{profile.id}", :title => "Désactiver le droit de modification de données utilisateur", :confirm => "Êtes vous sûr de vouloir désactiver le droit de modification de données utilisateurs?" %>
 					          <% end %>
 					          
 					          <% if profile.create_profile == false or profile.create_profile.blank? %>                  
-					            <%= link_to "<div class = 'icon'><span class = 'ico-user'></span></div>".html_safe, enable_create_profile_right_path(profile.id), :class => "button green", :id => "enable_create_profile_#{profile.id}", :confirm => "Êtes vous sûr de vouloir activer le droit de création de profils?" %>					            
+					            <%= link_to "<div class = 'icon'><span class = 'ico-user'></span></div>".html_safe, enable_create_profile_right_path(profile.id), :class => "button green", :id => "enable_create_profile_#{profile.id}", :title => "Activer le droit de création de profil utilisateur", :confirm => "Êtes vous sûr de vouloir activer le droit de création de profils?" %>					            
 					          <% else %>
-					            <%= link_to "<div class = 'icon'><span class = 'ico-user'></span></div>".html_safe, disable_create_profile_right_path(profile.id), :class => "button red", :id => "disable_create_profile_#{profile.id}", :confirm => "Êtes vous sûr de vouloir désactiver le droit de création de profils?" %>
+					            <%= link_to "<div class = 'icon'><span class = 'ico-user'></span></div>".html_safe, disable_create_profile_right_path(profile.id), :class => "button red", :id => "disable_create_profile_#{profile.id}", :title => "Désactiver le droit de création de profil utilisateur", :confirm => "Êtes vous sûr de vouloir désactiver le droit de création de profils?" %>
 					          <% end %>
 					          
 					          <% if profile.edit_profile == false or profile.edit_profile.blank? %>                  
-					            <%= link_to "<div class = 'icon'><span class = 'ico-user'></span></div>".html_safe, enable_edit_profile_right_path(profile.id), :class => "button blue", :id => "enable_edit_profile_#{profile.id}", :confirm => "Êtes vous sûr de vouloir activer le droit de modification de profils.?" %>					            
+					            <%= link_to "<div class = 'icon'><span class = 'ico-user'></span></div>".html_safe, enable_edit_profile_right_path(profile.id), :title => "Activer le droit de création de profil utilisateur", :class => "button blue", :title => "Activer le droit de modification de profil utilisateur", :id => "enable_edit_profile_#{profile.id}", :confirm => "Êtes vous sûr de vouloir activer le droit de modification de profils?" %>					            
 					          <% else %>
-					            <%= link_to "<div class = 'icon'><span class = 'ico-user'></span></div>".html_safe, disable_edit_profile_right_path(profile.id), :class => "button yellow", :id => "disable_edit_profile_#{profile.id}", :confirm => "Êtes vous sûr de vouloir désactiver le droit de modification de profils.?" %>
-					          <% end %>					          					                
+					            <%= link_to "<div class = 'icon'><span class = 'ico-user'></span></div>".html_safe, disable_edit_profile_right_path(profile.id), :class => "button yellow", :id => "disable_edit_profile_#{profile.id}", :title => "Désactiver le droit de modification de profil utilisateur", :confirm => "Êtes vous sûr de vouloir désactiver le droit de modification de profils?" %>
+					          <% end %>	
+					          
+					          <% if profile.view_transactions == false or profile.view_transactions.blank? %>                  
+					            <%= link_to "<div class = 'icon'><span class = 'ico-shopping-cart'></span></div>".html_safe, enable_view_transactions_right_path(profile.id), :class => "button green", :title => "Activer le droit de visualisation des transactions", :confirm => "Êtes vous sûr de vouloir activer le droit de visualisation des transactions?" %>					            
+					          <% else %>
+					            <%= link_to "<div class = 'icon'><span class = 'ico-shopping-cart'></span></div>".html_safe, disable_view_transactions_right_path(profile.id), :class => "button red", :title => "Désactiver le droit de visualisation des transactions", :confirm => "Êtes vous sûr de vouloir désactiver le droit de visualisation des transactions?" %>
+					          <% end %>		
+					          
+					          <% if profile.disable_account == false or profile.disable_account.blank? %>                  
+					            <%= link_to "<div class = 'icon'><span class = 'ico-remove-sign'></span></div>".html_safe, enable_disable_account_right_path(profile.id), :class => "button green", :title => "Activer le droit d'activation/désactivation de compte Paymoney", :confirm => "Êtes vous sûr de vouloir activer le droit d'activation/désactivation de compte Paymoney?" %>					            
+					          <% else %>
+					            <%= link_to "<div class = 'icon'><span class = 'ico-remove-sign'></span></div>".html_safe, disable_disable_account_right_path(profile.id), :class => "button red", :title => "Désactiver le droit d'activation/désactivation de compte Paymoney", :confirm => "Êtes vous sûr de vouloir désactiver le droit d'activation/désactivation de compte Paymoney?" %>
+					          <% end %>				          					                
                   </td>   
                   <td>
                     <%= profile.name %>

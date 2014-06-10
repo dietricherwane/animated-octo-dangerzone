@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Paymoney || Administrator</title>
+  <title>Paymoney || Administrateur::Paramétrages</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= stylesheet_link_tag    "stylesheets", media: "all", "data-turbolinks-track" => true %>
   <%= stylesheet_link_tag    "jquery.bubblepopup.v2.3.1", media: "all", "data-turbolinks-track" => true %>
@@ -63,12 +63,8 @@
 		  </div>
 		  <div class="nContainer">                
         <ul class="navigation bordered">         
-          <!--<li class="active"><%#= link_to "Dashboard", administrator_dashboard_path, class: "blblue" %></li>-->
           <li class="active"><%= link_to "Profils", profiles_path, class: "blblue" %></li>  
-          <li class="active"><%= link_to "Comptes", enabled_accounts_list_path, class: "blyellow" %></li>        
-          
-          <!--
-          <li><a href="statistic.html" class="blred">Paramètres</a></li>  -->                    
+          <!--<li class="active"><%= link_to "Comptes", enabled_accounts_list_path, class: "blyellow" %></li>   -->                        
         </ul>
         <a class="close">
           <span class="ico-remove"></span>
@@ -82,14 +78,6 @@
 		
 			<!------------------------------------------ Navigation ----------------------------------->
 			<ul class="navigation">
-        <!--<li>
-          <a href="<%#= administrator_dashboard_path %>" class="button">
-            <div class="icon">
-              <span class="ico-monitor"></span>
-            </div>                    
-            <div class="name">Dashboard</div>
-          </a>                
-        </li> -->
         <li>
           <a href="<%= profiles_path %>" class="button">
             <div class="icon">
@@ -98,54 +86,16 @@
             <div class="name">Profils</div>
           </a>                
         </li> 
-        <li>
+       <!-- <li>
           <a href="<%= enabled_accounts_list_path %>" class="button yellow">
             <div class="icon">
               <span class="ico-profile"></span>
             </div>                    
             <div class="name">Comptes</div>
           </a>                
-        </li>   
-        <!--                    
-        <li>
-          <a href="#" class="button green">
-            <div class="arrow"></div>
-            <div class="icon">
-              <span class="ico-pen-2"></span>
-            </div>                    
-            <div class="name">News</div>
-          </a>                
-          <ul class="sub">
-            <li><%= link_to "Envoi", "#" %></li>
-            <li><%= link_to "Historique", "#" %></li>
-            <li><%= link_to "Statistiques", "#" %></li>
-          </ul>                    
-        </li>                                               
-        <li>
-          <a href="#" class="button dblue">
-            <div class="arrow"></div>
-            <div class="icon">
-              <span class="ico-layout-7"></span>
-            </div>                    
-            <div class="name">Abonnés</div>
-          </a> 
-          <ul class="sub">
-            <li><a href="tables.html">Suspendre</a></li>
-            <li><a href="tables_dynamic.html">Rechercher</a></li>
-          </ul>                                        
-        </li>
-        <li>
-          <a href="statistic.html" class="button red">
-            <div class="icon">
-              <span class="ico-chart-4"></span>
-            </div>                    
-            <div class="name">Paramètres</div>
-          </a>                
-        </li> -->                                
+        </li>     -->            
         <li>
           <div class="user">
-            
-            <!--<%= image_tag("examples/users/dmitry_m.jpg", align: "left") %>-->
             <a href="#" class="name">
               <span><%= current_user.full_name %></span>
               <span class="cblue"><%= current_user.profile_name %></span>

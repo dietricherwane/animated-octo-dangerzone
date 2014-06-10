@@ -9,7 +9,7 @@ class Devise::RegistrationsController < DeviseController
   layout :layout_used
   # GET /resource/sign_up
   def new
-    @users = User.all.order(:firstname, :lastname)
+    @users = User.all.order(:firstname, :lastname).page(params[:page]).per_page(17)
     @alert_messages = params[:alert_messages]
   	@profiles = Profile.where("published IS NOT FALSE")
   	@firstnamecss = @lastnamecss = @phone_numbercss = @mobile_numbercss = @emailcss = @passwordcss = @password_confirmationcss = @profile_idcss = "row-form"

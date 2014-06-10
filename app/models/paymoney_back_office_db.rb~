@@ -1,5 +1,0 @@
-class PaymoneyBackOfficeDb < ActiveRecord::Base
-  def self.last_blog_post
-    
-  end
-end

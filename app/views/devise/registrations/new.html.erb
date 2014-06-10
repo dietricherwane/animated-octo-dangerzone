@@ -112,13 +112,18 @@
         </div>
         <h2>Liste des utilisateurs</h2>
       </div>
-      <div class = "head blue" >
+      <div class = "head yellow" >
 		    <div class = "icon" >
 		      <span class = "ico-pen-2"></span>		      
 		    </div>  
 		    <h2>Visualisation du profil des utilisateurs</h2>
 		  </div>		  
-		  <%= render 'users', :locals => {:users => @users} %>  	  
+		  <%= render 'users', :locals => {:users => @users} %>
+		  <% unless @users.blank? %>
+		    <div id = "pagination">
+          <%= paginate @users %>
+        </div>
+      <% end %>  	  
     </div>
   </div>
 </div>

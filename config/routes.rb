@@ -29,6 +29,8 @@ PaymoneyAdministration::Application.routes.draw do
   post "rechercher-un-compte" => "accounts#search"
   get "rechercher-un-compte" => "accounts#search"
   
+  get "auditeur-liste-des-profils" => "profiles#auditor_index", as: :auditor_index
+  get "liste-des-utilisateurs-par-profil/:profile_id" => "profiles#users_per_profile", as: :users_per_profile
   get "profile/custom" => "profiles#custom_profiles", as: :custom_profiles_dashboard
   get "profiles" => "profiles#index", as: :profiles
   post "profile/create" => "profiles#create"
@@ -47,6 +49,12 @@ PaymoneyAdministration::Application.routes.draw do
   
   get "profile/right/enable_edit_profile/:id" => "profiles#enable_edit_profile_right", as: :enable_edit_profile_right
   get "profile/right/disable_edit_profile/:id" => "profiles#disable_edit_profile_right", as: :disable_edit_profile_right
+  
+  get "profile/right/enable_view_transactions/:id" => "profiles#enable_view_transactions_right", as: :enable_view_transactions_right
+  get "profile/right/disable_view_transactions/:id" => "profiles#disable_view_transactions_right", as: :disable_view_transactions_right
+  
+  get "profile/right/enable_disable_account/:id" => "profiles#enable_disable_account_right", as: :enable_disable_account_right
+  get "profile/right/disable_disable_account/:id" => "profiles#disable_disable_account_right", as: :disable_disable_account_right
   
   #devise_scope :user do
   	#match '/users/sign_out' => 'devise/sessions#destroy'
