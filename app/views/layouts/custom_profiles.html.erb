@@ -63,11 +63,17 @@
 		  </div>
 		  <div class="nContainer">                
         <ul class="navigation bordered">
-          <% if current_user.profile.create_user or current_user.profile.edit_user_data %>         
-            <li class="active"><%= link_to "Utilisateurs", administrator_dashboard_path, class: "blblue" %></li>
-          <% end %>
-          <% if current_user.profile.create_profile or current_user.profile.edit_profile %>
-            <li class="active"><%= link_to "Profils", profiles_path, class: "blblue" %></li>
+          <% @profile = current_user.profile %>
+          <% if (@profile.published == true or @profile.published == nil) %>
+            <% if @profile.create_user or @profile.edit_user_data %>         
+              <li class="active"><%= link_to "Utilisateurs", administrator_dashboard_path, class: "blblue" %></li>
+            <% end %>
+            <% if @profile.create_profile or @profile.edit_profile %>
+              <li class="active"><%= link_to "Profils", profiles_path, class: "blyellow" %></li>
+            <% end %>
+            <% if @profile.view_transactions or @profile.disable_account %>
+              <li class="active"><%= link_to "Comptes", enabled_accounts_list_path, class: "blgreen" %></li>
+            <% end %>
           <% end %>
           <!--<li>
             <a href="#" class="blblue">Paramètres</a>
@@ -94,25 +100,38 @@
 		
 			<!------------------------------------------ Navigation ----------------------------------->
 			<ul class="navigation">
-        <% if current_user.profile.create_user or current_user.profile.edit_user_data %>     
-          <li>
-            <a href="<%= administrator_dashboard_path %>" class="button">
-              <div class="icon">
-                <span class="ico-monitor"></span>
-              </div>                    
-              <div class="name">Utilisateurs</div>
-            </a>                
-          </li>
-        <% end %> 
-        <% if current_user.profile.create_profile or current_user.profile.edit_profile %>
-          <li>
-            <a href="<%= profiles_path %>" class="button">
-              <div class="icon">
-                <span class="ico-user"></span>
-              </div>                    
-              <div class="name">Profils</div>
-            </a>                
-          </li>
+
+			  <% if (@profile.published == true or @profile.published == nil) %>
+          <% if @profile.create_user or @profile.edit_user_data %>     
+            <li>
+              <a href="<%= administrator_dashboard_path %>" class="button">
+                <div class="icon">
+                  <span class="ico-monitor"></span>
+                </div>                    
+                <div class="name">Utilisateurs</div>
+              </a>                
+            </li>
+          <% end %> 
+          <% if @profile.create_profile or @profile.edit_profile %>
+            <li>
+              <a href="<%= profiles_path %>" class="button yellow">
+                <div class="icon">
+                  <span class="ico-user"></span>
+                </div>                    
+                <div class="name">Profils</div>
+              </a>                
+            </li>
+          <% end %>
+          <% if @profile.view_transactions or @profile.disable_account %>
+            <li>
+              <a href="<%= enabled_accounts_list_path %>" class="button green">
+                <div class="icon">
+                  <span class="ico-user"></span>
+                </div>                    
+                <div class="name">Comptes</div>
+              </a>                
+            </li>
+          <% end %>
         <% end %>
         <!--                    
         <li>

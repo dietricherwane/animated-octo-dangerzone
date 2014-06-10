@@ -56,6 +56,9 @@ PaymoneyAdministration::Application.routes.draw do
   get "profile/right/enable_disable_account/:id" => "profiles#enable_disable_account_right", as: :enable_disable_account_right
   get "profile/right/disable_disable_account/:id" => "profiles#disable_disable_account_right", as: :disable_disable_account_right
   
+  get "profile/right/enable_disable_profile/:id" => "profiles#enable_disable_profile_right", as: :enable_disable_profile_right
+  get "profile/right/disable_disable_profile/:id" => "profiles#disable_disable_profile_right", as: :disable_disable_profile_right
+  
   #devise_scope :user do
   	#match '/users/sign_out' => 'devise/sessions#destroy'
   	#match 'create_user' => 'devise/registrations#new', :as => :dashboard_administrator

@@ -27,7 +27,7 @@ class ProfilesController < ApplicationController
   
   def index
     @namecss = @shortcutcss = "row-form"
-    @profiles = Profile.where("shortcut NOT IN ('ADMIN-P', 'ADMIN-R', 'ADMIN-A', 'GBUM')").page(params[:page]).per_page(17)
+    @profiles = Profile.where("shortcut NOT IN ('ADMIN-P', 'ADMIN-R', 'ADMIN-A', 'GBUM')").order("name ASC").page(params[:page]).per_page(17)
   end
   
   def create
@@ -193,7 +193,22 @@ class ProfilesController < ApplicationController
     @profile = Profile.find_by_id(id)
     @profile.update_attributes(disable_account: status)
     
-    redirect_to edit_profiles_rights_path, :notice => "Le profil #{@profile.name} #{message} le droit d'ctiver/désactiver des comptes Paymoney."
+    redirect_to edit_profiles_rights_path, :notice => "Le profil #{@profile.name} #{message} le droit d'activer/désactiver des comptes Paymoney."
+  end
+  
+  def enable_disable_profile_right
+    disable_profile_right(true, params[:id], "activé")
+  end
+  
+  def disable_disable_profile_right
+    disable_profile_right(false, params[:id], "désactivé")
+  end
+  
+  def disable_profile_right(status, id, message)
+    @profile = Profile.find_by_id(id)
+    @profile.update_attributes(published: status)
+    
+    redirect_to profiles_path, :notice => "Le profil #{@profile.name} a été #{message}."
   end
   
 end

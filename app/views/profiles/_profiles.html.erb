@@ -1,9 +1,9 @@
 <table cellpadding = "0" cellspacing = "0" width = "100%" class = "table">
   <thead>
     <tr>
-      <th width = "50%">Nom</th>
-      <th width = "29%">Abbréviation</th>
-      <th width = "21%">Actions</th>
+      <th width = "33%">Nom</th>
+      <th width = "33%">Abbréviation</th>
+      <th width = "34%">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -31,7 +31,12 @@
 					      <div class = "icon">			
 					        <span class = "ico-random"></span>		    
 					      </div>
-					    </a>	
+					    </a>	 
+					    <% if (profile.published == true or profile.published == nil) %>                 
+		            <%= link_to "<div class = 'icon'><span class = 'ico-cancel'></span></div>".html_safe, disable_disable_profile_right_path(profile.id), :class => "button red", :title => "Désactiver le profil", :confirm => "Êtes vous sûr de vouloir désactiver ce profil?" %>			            			            	            
+		          <% else %>
+		            <%= link_to "<div class = 'icon'><span class = 'ico-checkmark'></span></div>".html_safe, enable_disable_profile_right_path(profile.id), :class => "button green", :title => "Activer le profil", :confirm => "Êtes vous sûr de vouloir activer ce profil?" %>			            
+		          <% end %>		
 					  <% end %>    
 					</td>
 			  </tr>
